@@ -1,0 +1,17 @@
+.open{
+  background-color: #7FDBFF;
+  display: inline-block;
+  padding: 10px;
+  margin: 5px;
+  color: #555555;
+  font-size: 11px;
+  border: 1px solid #555555;
+}
+
+.taken{
+  display: inline-block;
+  font-size: 11px;
+  border: 1px solid #555555;
+  width: 30px;
+  height: 30px;
+}

@@ -10,3 +10,9 @@ router.post('/', bodyValidator, (req, res) => {
     res.send({ error, player });
   });
 });
+
+router.get('/', (req, res) => {
+  Player.find((error, players) => {
+    res.send({ error, players });
+  });
+});
