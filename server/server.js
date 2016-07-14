@@ -24,7 +24,8 @@ app.listen(port, () => {
   logger.log('info', '[EXPRESS] - listening port: %d', port);
 });
 
-app.use('/things', require('./controllers/things'));
+app.use('/players', require('./controllers/players'));
+app.use('/games', require('./controllers/games'));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../static/index.html'));
