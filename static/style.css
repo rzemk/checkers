@@ -1,17 +1,43 @@
-.open{
-  background-color: #7FDBFF;
+.invalidLocation{
+  background-color: #f4a477;
   display: inline-block;
-  padding: 10px;
-  margin: 5px;
-  color: #555555;
-  font-size: 11px;
+  font-size: 6px;
   border: 1px solid #555555;
+  width: 80px;
+  height: 80px;
 }
 
 .taken{
   display: inline-block;
-  font-size: 11px;
+  font-size: 6px;
   border: 1px solid #555555;
-  width: 30px;
-  height: 30px;
+  width: 80px;
+  height: 80px;
+}
+
+.selected{
+  background-color: #30a4a2;
+  display: inline-block;
+  font-size: 6px;
+  border: 1px solid #555555;
+  width: 80px;
+  height: 80px;
+}
+
+.noPad {
+  padding: 0,
+  margin: 0,
+}
+
+.piece{
+  vertical-align: middle;
+  horizontal-align: middle;
+  width: 80;
+  height: 80px;
+}
+
+.pieceHide {
+  visibility: hidden;
+  height: 80px;
+  width: 80px;
 }

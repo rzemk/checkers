@@ -1,5 +1,6 @@
 /* eslint-disable func-names, no-param-reassign, array-callback-return, max-len */
 import mongoose from 'mongoose';
+import Player from './player';
 
 const Schema = mongoose.Schema;
 const Piece = require('./piece');
@@ -36,7 +37,9 @@ function createInitialGameBoard() {
   return board;
 }
 
-function completeTurn(game) {
+function completeTurn(game, cb) {
+  let winner;
+  let loser;
   game.currentPlayer = (game.currentPlayer % 2) + 1;
   let p1 = 0;
   let p2 = 0;
@@ -54,6 +57,21 @@ function completeTurn(game) {
   if (p2 === 0) {
     game.winner = 1;
   }
+  if (game.winner > 0) {
+    if (game.winner === 2) {
+      winner = game.player2;
+      loser = game.player1;
+    } else {
+      winner = game.player1;
+      loser = game.player2;
+    }
+    // Player.findByIdAndUpdate(winner, { $inc: { wins: 1 } }, (err1, wPlayer)=> {
+    //   Player.findByIdAndUpdate(loser, { $inc: { losses: 1 } }, (err2, lPlayer)=> {
+    //     return cb();
+    //   });
+    // });
+    // game.handleWinLose(winner, loser, cb);
+  }
 }
 
 const gameSchema = new Schema({
@@ -68,7 +86,7 @@ function isMovementValid(obj, fromX, fromY, toX, toY, dist, player) {
   if ((fromX + fromY) % 2 !== 0 || (toX + toY) % 2 !== 0) {
     return new Error('not a valid move!');
   }
-  if (Math.abs(fromX - toX) !== dist && Math.abs(fromY + toY) !== dist) {
+  if (Math.abs(fromX - toX) !== dist || Math.abs(fromY - toY) !== dist) {
     return new Error('not a valid move - too far');
   }
 
@@ -84,10 +102,11 @@ function isMovementValid(obj, fromX, fromY, toX, toY, dist, player) {
     return new Error('not a valid move - destination occupied');
   }
 
-  if ((obj.currentPlayer === 1 && obj.player1.toString() !== player) ||
-    (obj.currentPlayer === 2 && obj.player2.toString() !== player)) {
+  if (!(obj.currentPlayer === 1 && obj.player1.toString() === player.toString() && obj.gameBoard[fromX][fromY].color === 'black') &&
+  !(obj.currentPlayer === 2 && obj.player2.toString() === player.toString() && obj.gameBoard[fromX][fromY].color === 'white')) {
     return new Error('not a valid move - not your turn');
   }
+
   return null;
 }
 
@@ -103,6 +122,7 @@ gameSchema.methods.move = function (fromX, fromY, toX, toY, player) {
     this.gameBoard[toX][toY].status = 'king';
   }
   completeTurn(this);
+  return;
 };
 
 gameSchema.methods.jump = function(fromX, fromY, toX, toY, player) {

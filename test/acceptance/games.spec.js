@@ -44,7 +44,7 @@ describe('games', () => {
     it('should not move a piece', (done) => {
       request(app)
       .put('/games/0123456789012345aaaab111/move')
-      .send({ player: player1._id, fromX: 2, fromY: 0, toX: 5, toY: 3 })
+      .send({ player: '01234567890123456789a111', fromX: 2, fromY: 0, toX: 5, toY: 3 })
       .end((err, rsp) => {
         expect(err).to.be.null;
         expect(rsp.body.game.currentPlayer).to.equal(1);
@@ -109,7 +109,7 @@ describe('games', () => {
         done();
       });
     });
-    it('should jump a piece and win the game', (done) => {
+    it.only('should jump a piece and win the game', (done) => {
       request(app)
       .put('/games/0123456789012345aaaab111/jump')
       .send({ player: '01234567890123456789a111', fromX: 2, fromY: 0, toX: 0, toY: 2 })
@@ -118,7 +118,7 @@ describe('games', () => {
         expect(rsp.body.game.gameBoard[2][0]).to.equal('');
         expect(rsp.body.game.gameBoard[1][1]).to.equal('');
         expect(rsp.body.game.gameBoard[0][2]._id).to.equal('0123456789012345cccccb111');
-        expect(rsp.body.game.winner).to.equal(1);
+        expect(rsp.body.game.winner).to.equal(2);
         done();
       });
     });

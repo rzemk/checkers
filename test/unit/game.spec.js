@@ -29,7 +29,7 @@ describe('game', () => {
     it('should move a piece', () => {
       const game = new Game({ player1, player2 });
       game.gameBoard = game.gameBoard.map(v => v.map(v2 => v2 = ''));
-      game.gameBoard[2][2] = { _id: 'abc', color: 'white' };
+      game.gameBoard[2][2] = { _id: 'abc', color: 'black' };
       const err = game.move(2, 2, 3, 3, player1._id.toString());
       expect(game).to.be.ok;
       expect(game.gameBoard[3][3]._id).to.equal('abc');
@@ -37,7 +37,7 @@ describe('game', () => {
     it('should move a piece - and king the mover', () => {
       const game = new Game({ player1, player2 });
       game.gameBoard = game.gameBoard.map(v => v.map(v2 => v2 = ''));
-      game.gameBoard[6][6] = { _id: 'abc', color: 'white' };
+      game.gameBoard[6][6] = { _id: 'abc', color: 'black' };
       const err = game.move(6, 6, 7, 7, player1._id.toString());
       expect(game).to.be.ok;
       expect(game.gameBoard[7][7]._id).to.equal('abc');
@@ -104,8 +104,8 @@ describe('game', () => {
     it('should jump another piece', () => {
       const game = new Game({ player1, player2 });
       game.gameBoard = game.gameBoard.map(v => v.map(v2 => v2 = ''));
-      game.gameBoard[1][5] = { _id: 'abc', color: 'black' };
-      game.gameBoard[2][4] = { _id: 'def', color: 'white' };
+      game.gameBoard[1][5] = { _id: 'abc', color: 'white' };
+      game.gameBoard[2][4] = { _id: 'def', color: 'black' };
       game.jump(2, 4, 0, 6, player1._id.toString());
       expect(game).to.be.ok;
       expect(game.gameBoard[0][6]._id).to.equal('def');
@@ -114,8 +114,8 @@ describe('game', () => {
     it('should jump another piece - and king the jumper at the end', () => {
       const game = new Game({ player1, player2 });
       game.gameBoard = game.gameBoard.map(v => v.map(v2 => v2 = ''));
-      game.gameBoard[5][5] = { _id: 'abc', color: 'white' };
-      game.gameBoard[6][6] = { _id: 'def', color: 'black' };
+      game.gameBoard[5][5] = { _id: 'abc', color: 'black' };
+      game.gameBoard[6][6] = { _id: 'def', color: 'white' };
       game.jump(5, 5, 7, 7, player1._id.toString());
       expect(game).to.be.ok;
       expect(game.gameBoard[7][7]._id).to.equal('abc');

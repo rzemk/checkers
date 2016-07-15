@@ -1,14 +1,20 @@
 [
   {
     "_id": { "$oid": "01234567890123456789a111" },
-    "name" : "bill"
+    "name" : "bill",
+    "wins" : 0,
+    "losses" : 0
   },
   {
     "_id": { "$oid": "01234567890123456789a222" },
-    "name" : "steve"
+    "name" : "steve",
+    "wins" : 0,
+    "losses" : 0
   },
   {
     "_id": { "$oid": "01234567890123456789a333" },
-    "name" : "bob"
+    "name" : "bob",
+    "wins" : 0,
+    "losses" : 0
   }
 ]

@@ -1,4 +1,4 @@
-/* eslint-disable new-cap */
+/* eslint-disable new-cap, max-len */
 import express from 'express';
 import Game from '../models/game';
 const router = module.exports = express.Router();
@@ -18,7 +18,8 @@ router.put('/:id/move', paramValidator, movementPositionValidator, (req, res) =>
     if (!error) {
       error = '';
     }
-    game.save(() => {
+    game.markModified('gameBoard');
+    game.save((err) => {
       res.send({ error: error.message, game });
     });
   });
@@ -26,12 +27,13 @@ router.put('/:id/move', paramValidator, movementPositionValidator, (req, res) =>
 
 router.put('/:id/jump', paramValidator, movementPositionValidator, (req, res) => {
   Game.findById(req.params.id, (err, game) => {
-    let error = game.jump(res.locals.fromX, res.locals.fromY, res.locals.toX, res.locals.toY, res.locals.player);
+    let error = game.jump(res.locals.fromX, res.locals.fromY, res.locals.toX, res.locals.toY, res.locals.player)
     if (!error) {
       error = '';
     }
+    game.markModified('gameBoard');
     game.save(() => {
-      res.send({ error, game });
+      res.send({ error: error.message, game });
     });
   });
 });
